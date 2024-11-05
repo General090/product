@@ -1,13 +1,13 @@
 import React from 'react'
-import Desserts from './Components/Desserts'
-import Completed from './Components/Completed'
+import Desserts from './Components/Desserts/desserts'
+import Order from './Components/Order/order'
 
 const App = () => {
   return (
-    <div>
-     <Desserts />
-      <Completed />
-    </div>
+    <>
+      <Desserts />
+      <Order />
+    </>
   )
 }
 

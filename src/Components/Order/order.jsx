@@ -1,6 +1,6 @@
 import React from 'react'
 
-function completed() {
+const order = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function completed() {
   )
 }
 
-export default completed
+export default order
