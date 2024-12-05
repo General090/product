@@ -136,18 +136,22 @@ function Desserts() {
         
         {cart.length > 0 ? (
             <>
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-4 space-y-2 text-base">
                 {cart.map((item) => (
-                  <li key={item.id} className="flex justify-between items-center">
-                    <span>{item.name} (x{item.quantity})</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                  <li key={item.id} className="flex-col flex">
+                    <span className='font-bold mb-3'>{item.alt}</span>
+                    <div className='flex gap-3'>
+                     <span className='text-red-500 font-bold'>{item.quantity}x</span>
+                      <span>@ ${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                    
                   </li>
                 ))}
               </ul>
               <div className="mt-4 border-t pt-4">
-                <div className="flex justify-between text-lg font-bold">
+                <div className="flex justify-between text-base">
                   <span>Order Total</span>
-                  <span>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
+                  <span className='font-bold text-xl'>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                 </div>
                 <button className="w-full mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
                   Confirm Order
