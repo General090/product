@@ -12,6 +12,7 @@ import Cotta from '../../Assets/Cotta.jpg'
 import Illustration from '../../Assets/Illustration.svg'
 import Decrement from '../../Assets/Decrement.svg'
 import Increment from '../../Assets/Increment.svg'
+import Remove from '../../Assets/Remove.svg'
 
 function Desserts() {
   const [cart, setCart] = useState([]);
@@ -50,7 +51,7 @@ function Desserts() {
   
     if (existingProduct.quantity === 1) {
       setCart(cart.filter((item) => item.id !== product.id));
-      setSelectedItems(selectedItems.filter((id) => id !== product.id)); // Remove the product ID
+      setSelectedItems(selectedItems.filter((id) => id !== product.id));
     } else {
       setCart(
         cart.map((item) =>
@@ -59,6 +60,12 @@ function Desserts() {
       );
     }
   };
+
+  const handleRemoveItem = (productId) => {
+    setCart(cart.filter((item) => item.id !== productId));
+    setSelectedItems(selectedItems.filter((id) => id !== productId));
+};
+
   
 
   const getProductQuantity = (productId) => {
@@ -66,13 +73,16 @@ function Desserts() {
     return product ? product.quantity : 0;
   };
 
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+
 
 
   return (
-   <section className='mt-14 ml-20'>
-    <div className='flex gap-7'>
-      <div className='w-[65%]'>
-        <header className='text-4xl mb-5 font-bold'>Desserts</header>
+   <section className='mt-10 pl-20 bg-[#FCF9F5]'>
+    <div className='flex gap-9'>
+      <div className='w-[60%]'>
+        <header className='text-4xl mb-5 font-bold ml-5 mt-7'>Desserts</header>
 
         <div className="grid grid-cols-3 gap-4">
         {products.map((product) => (
@@ -94,17 +104,17 @@ function Desserts() {
             {getProductQuantity(product.id) === 0 ? ( 
                 <button
               onClick={() => handleAddToCart(product)}
-              className="mt-2 px-4 py-2  border border-red-500 bg-white -translate-y-[9rem] rounded-full absolute left-14"
+              className="mt-2 px-4 py-2  border border-red-500 hover:border-orange-500 bg-white -translate-y-[9rem] rounded-full absolute left-12"
             >
               <div className='flex gap-3'>
                 <img src={AddCart} />
-                <p>Add to Cart</p>
+                <p className='hover:text-orange-500'>Add to Cart</p>
               </div>
             </button>
 
             ) : (
 
-              <div className="flex items-center justify-between bg-orange-600 w-[60%] py-[6px] -translate-y-[8.5rem] rounded-full absolute left-14">
+              <div className="flex items-center justify-between bg-orange-600 w-[60%] py-[6px] -translate-y-[8.5rem] rounded-full absolute left-12">
                   <button
                     className="px-4 py-2  text-white rounded-lg "
                     onClick={() => handleDecreaseQuantity(product)}
@@ -131,29 +141,44 @@ function Desserts() {
       </div>
       </div>
 
-      <div className='w-[30%]'>
-        <header className='text-red-500 text-xl font-bold mb-10'>Your Cart(0)</header>
+      <div className='w-[35%] h-[40%] bg-white rounded-md shadow-lg py-10 px-7'>
+      <header className="text-red-500 text-2xl font-bold mb-10">
+        Your Cart ({cart.reduce((total, item) => total + item.quantity, 0)})
+      </header>
         
         {cart.length > 0 ? (
             <>
-              <ul className="mt-4 space-y-2 text-base">
+              <ul className="mt-4 space-y-4">
                 {cart.map((item) => (
-                  <li key={item.id} className="flex-col flex">
-                    <span className='font-bold mb-3'>{item.alt}</span>
-                    <div className='flex gap-3'>
-                     <span className='text-red-500 font-bold'>{item.quantity}x</span>
-                      <span>@ ${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
+                  <li key={item.id} className="flex items-center border-b pb-4">
                     
+                    <div className="flex-grow">
+                      <span className="font-bold block">{item.alt}</span>
+                      <div className="flex gap-2 text-gray-600">
+                        <span className="text-orange-500 font-bold">{item.quantity}x</span>
+                        <span className='text-[#515151]'>@ ${(item.price).toFixed(2)} ${(item.price).toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                    
+                    <button
+                      className="border border-[#6A6464] py-1 px-1 rounded-full"
+                      onClick={() => handleRemoveItem(item.id)}
+                    >
+                      <img src={Remove} alt="Remove" className="w-3 h-3" />
+                    </button>
                   </li>
                 ))}
               </ul>
-              <div className="mt-4 border-t pt-4">
+
+
+              <div className="mt-4 border-t pt-4">    
                 <div className="flex justify-between text-base">
                   <span>Order Total</span>
                   <span className='font-bold text-xl'>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                 </div>
-                <button className="w-full mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                <p>This is a <span>carbon-neutral</span> delivery</p>
+                <button className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full">
                   Confirm Order
                 </button>
               </div>
