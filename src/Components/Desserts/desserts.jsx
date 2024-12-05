@@ -13,6 +13,7 @@ import Illustration from '../../Assets/Illustration.svg'
 import Decrement from '../../Assets/Decrement.svg'
 import Increment from '../../Assets/Increment.svg'
 import Remove from '../../Assets/Remove.svg'
+import Carbon from '../../Assets/Carbon.svg'
 
 function Desserts() {
   const [cart, setCart] = useState([]);
@@ -177,7 +178,7 @@ function Desserts() {
                   <span>Order Total</span>
                   <span className='font-bold text-xl'>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                 </div>
-                <p>This is a <span>carbon-neutral</span> delivery</p>
+                <p><img src={Carbon} alt="Carbon" /> This is a <span>carbon-neutral</span> delivery</p>
                 <button className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full">
                   Confirm Order
                 </button>
