@@ -81,12 +81,12 @@ function Desserts() {
 
 
   return (
-   <section className='mt-10 mb-10 pl-20 bg-[#FCF9F5]'>
-    <div className='flex gap-9'>
-      <div className='w-[60%]'>
+   <section className='lg:mt-10 mb-10 lg:pl-20 bg-[#FCF9F5]'>
+    <div className='md:flex lg:gap-9'>
+      <div className='lg:w-[60%]'>
         <header className='text-4xl mb-5 font-bold ml-5 mt-7'>Desserts</header>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="md:grid lg:grid-cols-3 lg:gap-4"> 
         {products.map((product) => (
           <div
             key={product.id}
@@ -95,7 +95,7 @@ function Desserts() {
             <img
               src={product.image}
               alt={product.name}
-              className={`rounded-md w-full ${
+              className={`lg:rounded-md rounded-xl ${
                 selectedItems.includes(product.id) ? "ring-2 ring-orange-500" : ""
               }`}
             />
@@ -106,7 +106,7 @@ function Desserts() {
             {getProductQuantity(product.id) === 0 ? ( 
                 <button
               onClick={() => handleAddToCart(product)}
-              className="mt-2 px-4 py-2  border border-red-500 hover:border-orange-500 bg-white -translate-y-[9rem] rounded-full absolute left-12"
+              className="mt-2 lg:px-4 lg:py-2 px-8 py-4  border border-red-500 hover:border-orange-500 bg-white lg:-translate-y-[9rem] -translate-y-[9.5rem] rounded-full absolute lg:left-12 left-[27%]"
             >
               <div className='flex gap-3'>
                 <img src={AddCart} />
@@ -116,7 +116,7 @@ function Desserts() {
 
             ) : (
 
-              <div className="flex items-center justify-between bg-orange-600 w-[60%] py-[6px] -translate-y-[8.5rem] rounded-full absolute left-12">
+              <div className="flex items-center justify-between bg-orange-600 w-[45%] lg:w-[60%] py-3 lg:py-[6px] -translate-y-[9rem] lg:-translate-y-[8.5rem] rounded-full absolute left-[26%] lg:left-12">
                   <button
                     className="px-4 py-2  text-white rounded-lg "
                     onClick={() => handleDecreaseQuantity(product)}
@@ -140,8 +140,8 @@ function Desserts() {
       </div>
       </div>
 
-      <div className='w-[35%] h-[40%] bg-white rounded-md shadow-lg py-10 px-7'>
-      <header className="text-red-500 text-2xl font-bold mb-10">
+      <div className='lg:w-[35%] h-[40%] bg-white rounded-md shadow-lg py-10 px-7 mx-4'>
+      <header className="text-red-500 text-3xl lg:text-2xl font-bold mb-10">
         Your Cart ({cart.reduce((total, item) => total + item.quantity, 0)})
       </header>
         
@@ -177,7 +177,7 @@ function Desserts() {
                   <span className='font-bold text-xl'>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                 </div>
 
-                <div className='flex gap-4 bg-[#FCF9F5] mt-10 ml-10 mb-5'>
+                <div className='flex gap-4 bg-[#FCF9F5] mt-10 ml-5 md:ml-0 lg:ml-10 mb-5'>
                   <img src={Carbon} alt="Carbon" />
                   <p>This is a <span className='text-black font-bold'>carbon-neutral</span> delivery</p>
                 </div>
@@ -192,7 +192,7 @@ function Desserts() {
           ) : (
             <div>
               <img src={Illustration} alt="illustration" className="mx-auto mt-10 w-40 mb-10" />
-              <p className="ml-16 text-sm text-[#9E9492] font-bold">Your added item will be added here</p>
+              <p className="ml-5 lg:ml-16 text-lg lg:text-sm text-[#9E9492] font-bold">Your added item will be added here</p>
             </div>
           )}
         </div>
@@ -205,31 +205,32 @@ function Desserts() {
                 <h2 className="text-2xl font-bold mb-2">Order Confirmed</h2>
               </div>
               <p className="text-[#e3c092]">We hope you enjoy your food!</p>
-              <div className='bg-[#FCF9F5] rounded-md mt-5 px-5 py-5'>
-                <ul className="mt-4 space-y-3">
+              
+              {/* Make the item list container scrollable */}
+              <div className="bg-[#FCF9F5] rounded-md mt-5 px-5 py-5 max-h-[400px] overflow-y-auto">
+                <ul className="mt-4">
                   {cart.map((item) => (
-                    <li key={item.id} className='flex bg-green-600 justify-between'>
-                      <div className='bg-blue-400'>
-                      <img
-                            src={item.image}
-                            className="w-12 h-12 object-cover rounded-md"
-                          />
-                      </div>
-                          
-                          <span className= "flex bg-red-500 mb-5"> 
-                            <span className="text-gray-800 flex-col flex font-bold mb-2">{item.alt}</span>
-                            
-                          </span>
-                          <div>
-                          <span className="text-orange-500 font-bold">
+                    <li key={item.id} className='flex justify-between items-center'>
+                      <div className='flex gap-4'>
+                        <img
+                          src={item.image}
+                          className="w-12 h-12 object-cover rounded-md"
+                        />
+                        <span className="flex flex-col mb-5"> 
+                          <span className="text-gray-800 font-bold mb-2">{item.alt}</span>
+                          <div className='flex gap-2'>
+                            <span className="text-orange-500 font-bold">
                               {item.quantity}x
                             </span> 
-                            <span className=' text-orange-200'>@${(item.price).toFixed(2)}</span> 
+                            <span className='text-orange-200'>@${(item.price).toFixed(2)}</span> 
                           </div>
-                          <span className='flex items-center gap-end'>${(item.price).toFixed(2)}</span>
+                        </span>
+                      </div>
+                      <span>${(item.price).toFixed(2)}</span>
                     </li>
                   ))}
                 </ul>
+
                 <div className="mt-4 flex justify-between text-xl">
                   <span className='text-base'>Order Total</span>
                   <span className='font-bold'>
@@ -237,7 +238,7 @@ function Desserts() {
                   </span>
                 </div>
               </div>
-              
+
               <button
                 className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full"
                 onClick={() => setModalVisible(false)}
@@ -246,7 +247,8 @@ function Desserts() {
               </button>
             </div>
           </div>
-        )}
+)}
+
       </div>
     </section>
   )
