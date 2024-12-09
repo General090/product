@@ -201,12 +201,10 @@ function Desserts() {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="w-[90%] max-w-md bg-white rounded-lg shadow-lg p-6">
               <div>
-                <img src={Confirmed} alt="confirmed" className='w-[10%] mb-5' />
-                <h2 className="text-2xl font-bold mb-2">Order Confirmed</h2>
+                <img src={Confirmed} alt="confirmed" className='w-[20%] lg:w-[10%] mb-5' />
+                <h2 className="text-4xl lg:text-2xl font-bold mb-2">Order Confirmed</h2>
               </div>
               <p className="text-[#e3c092]">We hope you enjoy your food!</p>
-              
-              {/* Make the item list container scrollable */}
               <div className="bg-[#FCF9F5] rounded-md mt-5 px-5 py-5 max-h-[400px] overflow-y-auto">
                 <ul className="mt-4">
                   {cart.map((item) => (
