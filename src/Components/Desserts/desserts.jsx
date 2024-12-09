@@ -14,6 +14,7 @@ import Decrement from '../../Assets/Decrement.svg'
 import Increment from '../../Assets/Increment.svg'
 import Remove from '../../Assets/Remove.svg'
 import Carbon from '../../Assets/Carbon.svg'
+import Confirmed from '../../Assets/Confirmed.svg'
 
 function Desserts() {
   const [cart, setCart] = useState([]);
@@ -75,12 +76,12 @@ function Desserts() {
   };
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-
+  const [isModalVisible, setModalVisible] = useState(false);
 
 
 
   return (
-   <section className='mt-10 pl-20 bg-[#FCF9F5]'>
+   <section className='mt-10 mb-10 pl-20 bg-[#FCF9F5]'>
     <div className='flex gap-9'>
       <div className='w-[60%]'>
         <header className='text-4xl mb-5 font-bold ml-5 mt-7'>Desserts</header>
@@ -133,10 +134,7 @@ function Desserts() {
                   </button>
                 </div>
             )}
-              
-              
-
-            
+          
           </div>
         ))}
       </div>
@@ -157,7 +155,7 @@ function Desserts() {
                       <span className="font-bold block">{item.alt}</span>
                       <div className="flex gap-2 text-gray-600">
                         <span className="text-orange-500 font-bold">{item.quantity}x</span>
-                        <span className='text-[#515151]'>@ ${(item.price).toFixed(2)} ${(item.price).toFixed(2)}</span>
+                        <span className='text-orange-200'>@ ${(item.price).toFixed(2)} ${(item.price).toFixed(2)}</span>
                       </div>
                     </div>
 
@@ -175,11 +173,18 @@ function Desserts() {
 
               <div className="mt-4 border-t pt-4">    
                 <div className="flex justify-between text-base">
-                  <span>Order Total</span>
+                  <span className='text-base'>Order Total</span>
                   <span className='font-bold text-xl'>${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                 </div>
-                <p><img src={Carbon} alt="Carbon" /> This is a <span>carbon-neutral</span> delivery</p>
-                <button className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full">
+
+                <div className='flex gap-4 bg-[#FCF9F5] mt-10 ml-10 mb-5'>
+                  <img src={Carbon} alt="Carbon" />
+                  <p>This is a <span className='text-black font-bold'>carbon-neutral</span> delivery</p>
+                </div>
+                <button className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full"
+                  onClick={() => setModalVisible(true)}
+                >
+                
                   Confirm Order
                 </button>
               </div>
@@ -191,6 +196,57 @@ function Desserts() {
             </div>
           )}
         </div>
+
+        {isModalVisible && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="w-[90%] max-w-md bg-white rounded-lg shadow-lg p-6">
+              <div>
+                <img src={Confirmed} alt="confirmed" className='w-[10%] mb-5' />
+                <h2 className="text-2xl font-bold mb-2">Order Confirmed</h2>
+              </div>
+              <p className="text-[#e3c092]">We hope you enjoy your food!</p>
+              <div className='bg-[#FCF9F5] rounded-md mt-5 px-5 py-5'>
+                <ul className="mt-4 space-y-3">
+                  {cart.map((item) => (
+                    <li key={item.id} className='flex bg-green-600 justify-between'>
+                      <div className='bg-blue-400'>
+                      <img
+                            src={item.image}
+                            className="w-12 h-12 object-cover rounded-md"
+                          />
+                      </div>
+                          
+                          <span className= "flex bg-red-500 mb-5"> 
+                            <span className="text-gray-800 flex-col flex font-bold mb-2">{item.alt}</span>
+                            
+                          </span>
+                          <div>
+                          <span className="text-orange-500 font-bold">
+                              {item.quantity}x
+                            </span> 
+                            <span className=' text-orange-200'>@${(item.price).toFixed(2)}</span> 
+                          </div>
+                          <span className='flex items-center gap-end'>${(item.price).toFixed(2)}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-4 flex justify-between text-xl">
+                  <span className='text-base'>Order Total</span>
+                  <span className='font-bold'>
+                    ${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+              
+              <button
+                className="w-full mt-4 px-4 py-2 bg-orange-700 text-white hover:bg-orange-800 rounded-full"
+                onClick={() => setModalVisible(false)}
+              >
+                Start New Order
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
